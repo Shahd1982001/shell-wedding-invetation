@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { wedding } from '../config/wedding.js'
+import { asset } from '../config/assets.js'
 
 // ظرف مقفل ثلاثي الأبعاد؛ الضغط على الشريط يفتح الغطاء وتخرج الورقة بالملاحظات
 export default function PersonalNote({ reduce }) {
@@ -46,7 +47,7 @@ export default function PersonalNote({ reduce }) {
             <div className="flap" />
             <button className="ribbon" onClick={toggle} aria-expanded={open} aria-label="فتح الظرف لقراءة الملاحظات">
               <span className="wax-seal" aria-hidden="true">
-                <img className="seal-logo" src="/assets/logo copy.webp" alt="" />
+                <img className="seal-logo" src={asset('logo copy.webp')} alt="" />
               </span>
             </button>
           </div>

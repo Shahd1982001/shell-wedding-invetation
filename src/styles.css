@@ -7,13 +7,13 @@ button{font:inherit;color:inherit;cursor:pointer;background:none;border:0}
 h1,h2,h3,.ayah,.names,.month{font-family:'Amiri',serif;font-weight:700}
 
 /* خلفية القاعة الثابتة */
-.bg{position:fixed;inset:0;z-index:-2;background:url(/assets/hall.webp) center/cover no-repeat,var(--deep)}
+.bg{position:fixed;inset:0;z-index:-2;background:url(../assets/hall.webp) center/cover no-repeat,var(--deep)}
 .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,36,42,.35),rgba(6,36,42,.55))}
 .veil{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:200}
 
 /* الافتتاحية */
 .intro{position:fixed;inset:0;z-index:50;background:linear-gradient(135deg,rgba(3,20,24,.9),rgba(6,55,62,.82)),#06242a;overflow:hidden;isolation:isolate}
-.intro::before{content:"";position:absolute;inset:-34px;z-index:-1;background:url(/assets/hall.webp) center/cover no-repeat;filter:blur(22px) saturate(.72);transform:scale(1.12);opacity:.68}
+.intro::before{content:"";position:absolute;inset:-34px;z-index:-1;background:url(../assets/hall.webp) center/cover no-repeat;filter:blur(22px) saturate(.72);transform:scale(1.12);opacity:.68}
 .intro::after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle at 50% 42%,rgba(16,117,125,.3),transparent 42%),linear-gradient(180deg,rgba(3,20,24,.38),rgba(3,20,24,.78))}
 .intro-canvas{position:absolute;inset:0}
 .intro-canvas canvas{display:block;width:100%;height:100%}
