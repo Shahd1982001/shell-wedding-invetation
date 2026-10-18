@@ -5,7 +5,7 @@ import { wedding } from '../config/wedding.js'
 import { asset } from '../config/assets.js'
 
 // ظرف مقفل ثلاثي الأبعاد؛ الضغط على الشريط يفتح الغطاء وتخرج الورقة بالملاحظات
-export default function PersonalNote({ reduce, onOpen }) {
+export default function PersonalNote({ reduce }) {
   const sec = useRef(null), tlRef = useRef(null)
   const [open, setOpen] = useState(false)
 
@@ -33,17 +33,12 @@ export default function PersonalNote({ reduce, onOpen }) {
     const t = tlRef.current
     if (!t) return
     if (open) t.reverse()
-    else { t.play(); onOpen?.() }
+    else t.play()
     setOpen(!open)
   }
 
-  const continueAfterNote = (event) => {
-    if (!open || event.target.closest('button')) return
-    onOpen?.('continue')
-  }
-
   return (
-    <section className="note" ref={sec} aria-label={wedding.notes.title} onClick={continueAfterNote}>
+    <section className="note" ref={sec} aria-label={wedding.notes.title}>
       <h2 className="sec-title">{wedding.notes.title}</h2>
       <div className="noteStage">
         <div className="env3d">

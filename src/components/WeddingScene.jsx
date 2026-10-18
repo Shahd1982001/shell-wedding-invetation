@@ -20,7 +20,7 @@ export default function WeddingScene({ onImageLoad }) {
         </h1>
         <p className="sub">{wedding.subtitle}</p>
       </header>
-      <div className="hint" aria-hidden="true"><span>مرّروا للأسفل</span><b /></div>
+      <div className="hint" aria-hidden="true"><span>اسحبي للأعلى للمتابعة</span><b /></div>
     </>
   )
 }

@@ -10,9 +10,7 @@ h1,h2,h3,.ayah,.names,.month{font-family:'Amiri',serif;font-weight:700}
 .bg{position:fixed;inset:0;z-index:-2;background:var(--hall-image) center/cover no-repeat,var(--deep)}
 .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,36,42,.35),rgba(6,36,42,.55))}
 .veil{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:200}
-.auto-controls{position:fixed;right:16px;bottom:max(16px,env(safe-area-inset-bottom));z-index:80;display:flex;align-items:center;gap:10px;max-width:calc(100vw - 32px);padding:8px 10px 8px 8px;border:1px solid rgba(240,219,164,.35);border-radius:999px;background:rgba(3,20,24,.78);backdrop-filter:blur(8px);color:var(--gold2);font-size:.78rem}
-.auto-controls button{min-height:36px;padding:6px 13px;border-radius:999px;background:var(--gold2);color:var(--deep);font-weight:700;white-space:nowrap}
-@media (max-width:600px){.auto-controls{right:10px;left:10px;justify-content:space-between;font-size:.72rem}.auto-controls button{padding-inline:11px}.stage{--w:min(88vw,52svh)}.lead{font-size:clamp(1.35rem,6.5vw,2rem)}.ayah{font-size:clamp(1.2rem,5.8vw,1.8rem);line-height:1.9}}
+@media (max-width:600px){.stage{--w:min(88vw,52svh)}.lead{font-size:clamp(1.35rem,6.5vw,2rem)}.ayah{font-size:clamp(1.2rem,5.8vw,1.8rem);line-height:1.9}}
 
 /* الافتتاحية */
 .intro{position:fixed;inset:0;z-index:50;background:linear-gradient(135deg,rgba(3,20,24,.9),rgba(6,55,62,.82)),#06242a;overflow:hidden;isolation:isolate}
@@ -49,7 +47,7 @@ h1,h2,h3,.ayah,.names,.month{font-family:'Amiri',serif;font-weight:700}
 .names i{font-style:normal;color:var(--gold);font-size:.65em}
 .sub{font-size:clamp(.9rem,3.4vw,1.1rem);color:var(--gold2);text-shadow:0 1px 8px rgba(0,0,0,.5)}
 .hint{position:absolute;bottom:14px;inset-inline:0;z-index:4;text-align:center;font-size:.8rem;color:var(--gold2);display:grid;justify-items:center;gap:4px;pointer-events:none}
-.hint b{width:1px;height:26px;background:linear-gradient(var(--gold2),transparent);animation:drip 2s ease-in-out infinite}
+.hint b{width:1px;height:26px;background:linear-gradient(var(--gold2),transparent);animation:drip .9s ease-in-out infinite}
 @keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 .dim{position:absolute;inset:0;z-index:3;background:rgba(5,34,40,.66);opacity:0;pointer-events:none}
 .layer{position:absolute;inset:0;z-index:5;display:grid;place-items:center;text-align:center;padding:24px;pointer-events:none;visibility:hidden;opacity:0}
