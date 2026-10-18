@@ -63,7 +63,6 @@ export default function RSVPForm() {
           )}
           <button className="btn-gold" type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'جارٍ الإرسال…' : 'إرسال الرد'}</button>
           {status === 'error' && <p className="err" role="alert">تعذّر الإرسال، يرجى المحاولة مرة أخرى.</p>}
-          <p className="demo">نسخة تجريبية — لا يتم حفظ البيانات بصورة دائمة.</p>
         </form>
       )}
     </section>
