@@ -5,7 +5,7 @@ import { wedding } from '../config/wedding.js'
 import { asset } from '../config/assets.js'
 
 // ظرف مقفل ثلاثي الأبعاد؛ الضغط على الشريط يفتح الغطاء وتخرج الورقة بالملاحظات
-export default function PersonalNote({ reduce }) {
+export default function PersonalNote({ reduce, onOpen }) {
   const sec = useRef(null), tlRef = useRef(null)
   const [open, setOpen] = useState(false)
 
@@ -29,10 +29,21 @@ export default function PersonalNote({ reduce }) {
     return () => ctx.revert()
   }, [reduce])
 
-  const toggle = () => { const t = tlRef.current; if (!t) return; open ? t.reverse() : t.play(); setOpen(!open) }
+  const toggle = () => {
+    const t = tlRef.current
+    if (!t) return
+    if (open) t.reverse()
+    else { t.play(); onOpen?.() }
+    setOpen(!open)
+  }
+
+  const continueAfterNote = (event) => {
+    if (!open || event.target.closest('button')) return
+    onOpen?.('continue')
+  }
 
   return (
-    <section className="note" ref={sec} aria-label={wedding.notes.title}>
+    <section className="note" ref={sec} aria-label={wedding.notes.title} onClick={continueAfterNote}>
       <h2 className="sec-title">{wedding.notes.title}</h2>
       <div className="noteStage">
         <div className="env3d">
@@ -53,7 +64,7 @@ export default function PersonalNote({ reduce }) {
           </div>
         </div>
       </div>
-      <p className="tap">{open ? '' : 'اضغطي على الشريط لفتح الظرف'}</p>
+      <p className="tap">{open ? 'اضغطي في أي مكان للمتابعة' : 'اضغطي على الشريط لفتح الظرف'}</p>
       {open && <button className="link" onClick={toggle}>إغلاق الظرف</button>}
     </section>
   )

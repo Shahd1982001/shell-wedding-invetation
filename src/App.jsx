@@ -20,6 +20,7 @@ export default function App() {
   const pauseTarget = useRef('')
   const skippedTargets = useRef(new Set())
   const programmaticScroll = useRef(false)
+  const autoplayTimer = useRef(null)
   const reduce = useReducedMotion()
 
   useEffect(() => {
@@ -30,6 +31,8 @@ export default function App() {
     return () => { t.kill(); clearTimeout(r) }
   }, [stage, reduce])
 
+  useEffect(() => () => clearTimeout(autoplayTimer.current), [])
+
   useEffect(() => {
     if (stage !== 'story' || reduce) return undefined
 
@@ -37,6 +40,7 @@ export default function App() {
     let previous = performance.now()
     const targets = {
       venue: () => document.querySelector('.venue'),
+      note: () => document.querySelector('.note'),
       rsvp: () => document.querySelector('.rsvp'),
     }
 
@@ -69,7 +73,7 @@ export default function App() {
       if (autoPlayRef.current && activeTarget && pauseTarget.current !== activeTarget) stopAtTarget(activeTarget)
       if (autoPlayRef.current && !activeTarget) {
         programmaticScroll.current = true
-        window.scrollBy(0, elapsed * 0.045)
+        window.scrollBy(0, elapsed * 0.11)
         window.setTimeout(() => { programmaticScroll.current = false }, 0)
       }
       frame = requestAnimationFrame(tick)
@@ -107,13 +111,14 @@ export default function App() {
     window.scrollTo(0, 0)
     skippedTargets.current.clear()
     setStage('story')
-    changeAutoPlay(true)
+    clearTimeout(autoplayTimer.current)
+    autoplayTimer.current = setTimeout(() => changeAutoPlay(true), 2600)
   }
   const replay = () => {
     gsap.to(veil.current, {
       opacity: 1, duration: 1.4, ease: 'power2.inOut',
       onComplete: () => {
-        window.scrollTo(0, 0); skippedTargets.current.clear(); setRun((n) => n + 1); setStage('intro'); changeAutoPlay(false)
+        window.scrollTo(0, 0); skippedTargets.current.clear(); clearTimeout(autoplayTimer.current); setRun((n) => n + 1); setStage('intro'); changeAutoPlay(false)
         gsap.to(veil.current, { opacity: 0, duration: 1.6, delay: 0.3 })
       },
     })
@@ -127,7 +132,18 @@ export default function App() {
       ) : (
         <main>
           <Story reduce={reduce} />
-          <PersonalNote reduce={reduce} />
+          <PersonalNote
+            reduce={reduce}
+            onOpen={(action) => {
+              if (action === 'continue') {
+                pauseTarget.current = ''
+                skippedTargets.current.add('note')
+                changeAutoPlay(true)
+              } else {
+                changeAutoPlay(false)
+              }
+            }}
+          />
           <RSVPForm />
           <ClosingShell onReplay={replay} />
         </main>
@@ -135,6 +151,7 @@ export default function App() {
       {stage === 'story' && !reduce && (
         <div className="auto-controls" aria-live="polite">
           {pauseReason === 'venue' && <span>توقّف عند الصالة — يمكنك فتح الخريطة</span>}
+          {pauseReason === 'note' && <span>افتحي الظرف لقراءة الملاحظات</span>}
           {pauseReason === 'rsvp' && <span>توقّف لتأكيد الحضور</span>}
           {pauseReason === 'manual' && <span>تم إيقاف التشغيل للقراءة</span>}
           <button type="button" onClick={() => changeAutoPlay(!autoPlay)}>
