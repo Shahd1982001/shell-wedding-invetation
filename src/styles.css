@@ -47,7 +47,9 @@ h1,h2,h3,.ayah,.names,.month{font-family:'Amiri',serif;font-weight:700}
 .names i{font-style:normal;color:var(--gold);font-size:.65em}
 .sub{font-size:clamp(.9rem,3.4vw,1.1rem);color:var(--gold2);text-shadow:0 1px 8px rgba(0,0,0,.5)}
 .hint{position:absolute;bottom:14px;inset-inline:0;z-index:4;text-align:center;font-size:.8rem;color:var(--gold2);display:grid;justify-items:center;gap:4px;pointer-events:none}
+.swipe-hand{font-size:1.55rem;line-height:1;animation:swipe-hand 1s ease-in-out infinite}
 .hint b{width:1px;height:26px;background:linear-gradient(var(--gold2),transparent);animation:drip .9s ease-in-out infinite}
+@keyframes swipe-hand{0%,100%{transform:translateY(5px);opacity:.65}50%{transform:translateY(-7px);opacity:1}}
 @keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 .dim{position:absolute;inset:0;z-index:3;background:rgba(5,34,40,.66);opacity:0;pointer-events:none}
 .layer{position:absolute;inset:0;z-index:5;display:grid;place-items:center;text-align:center;padding:24px;pointer-events:none;visibility:hidden;opacity:0}
@@ -129,4 +131,4 @@ select option{color:#222}
 @keyframes breathe{50%{transform:scale(1.05);box-shadow:0 0 56px 14px rgba(255,240,200,.5),inset -6px -8px 14px rgba(120,110,80,.35)}}
 
 @media (max-width:520px){.sound-toggle span{display:none}.venue-actions{flex-direction:column;width:min(88vw,300px)}.venue-actions .btn-gold{width:100%}.count{gap:4px}.count div{min-width:58px}}
-@media (prefers-reduced-motion:reduce){.intro-hint.show,.pearl,.hint b,.bubbles i{animation:none}}
+@media (prefers-reduced-motion:reduce){.intro-hint.show,.pearl,.hint b,.swipe-hand,.bubbles i{animation:none}}

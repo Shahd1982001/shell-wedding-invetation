@@ -25,19 +25,19 @@ export default function Story({ reduce }) {
 
       const tl = gsap.timeline({
         defaults: { ease: 'none' },
-        scrollTrigger: { trigger: root.current, start: 'top top', end: () => '+=' + window.innerHeight * 7.5, pin: true, scrub: 1.2, anticipatePin: 1, invalidateOnRefresh: true },
+        scrollTrigger: { trigger: root.current, start: 'top top', end: () => '+=' + window.innerHeight * 5.8, pin: true, scrub: 1.2, anticipatePin: 1, invalidateOnRefresh: true },
       })
       tl.to(q('.hero'), { autoAlpha: 0, y: -40, duration: 1.2 }, 0)
         .to(q('.hint'), { autoAlpha: 0, duration: 0.4 }, 0)
-        .to(wrap, { scale: S, x: () => (reduce ? 0 : toDress().x), y: () => (reduce ? 0 : toDress().y), duration: 2.1, ease: 'power1.inOut' }, 0.3)
-        .to(q('.dim'), { opacity: 1, duration: 0.8 }, 1.2)
-        .fromTo(q('.welcome'), from, fadeIn, 1.8).to(q('.welcome'), fadeOut, 4.8)
-        .fromTo(q('.cal'), from, fadeIn, 5.1).to(q('.cal'), fadeOut, 6.6)
+        .to(wrap, { scale: S, x: () => (reduce ? 0 : toDress().x), y: () => (reduce ? 0 : toDress().y), duration: 1.25, ease: 'power1.inOut' }, 0.2)
+        .to(q('.dim'), { opacity: 1, duration: 0.5 }, 0.9)
+        .fromTo(q('.welcome'), from, fadeIn, 1.35).to(q('.welcome'), fadeOut, 3.25)
+        .fromTo(q('.cal'), from, fadeIn, 3.45).to(q('.cal'), fadeOut, 4.35)
         // يتحول الفستان بهدوء إلى خلفية الصالة عند نهاية التاريخ
-        .to(q('.couple.main'), { autoAlpha: 0, scale: 1.04, duration: reduce ? 0.5 : 0.9 }, 6.8)
-        .to(q('.dim'), { opacity: 0, duration: reduce ? 0.8 : 1.4, ease: 'power1.inOut' }, 6.8)
-        .fromTo(q('.venue'), { autoAlpha: 0, scale: 0.98 }, { autoAlpha: 1, scale: 1, duration: reduce ? 0.5 : 0.9 }, 7.2)
-        .to({}, { duration: 1.2 })
+        .to(q('.couple.main'), { autoAlpha: 0, scale: 1.04, duration: reduce ? 0.35 : 0.6 }, 4.55)
+        .to(q('.dim'), { opacity: 0, duration: reduce ? 0.5 : 0.8, ease: 'power1.inOut' }, 4.55)
+        .fromTo(q('.venue'), { autoAlpha: 0, scale: 0.98 }, { autoAlpha: 1, scale: 1, duration: reduce ? 0.35 : 0.6 }, 4.8)
+        .to({}, { duration: 0.35 })
     }, root)
     const onLoad = () => ScrollTrigger.refresh()
     window.addEventListener('load', onLoad)
