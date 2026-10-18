@@ -1,7 +1,17 @@
-// نسخة تجريبية: لا يتم حفظ أي بيانات.
-// لاحقًا: استبدلي المحتوى بـ addDoc(collection(db,'rsvps'), data) من Firebase Firestore
-// دون تغيير واجهة RSVPForm (الدالة تستقبل كائنًا وتُرجع Promise).
-export async function submitRsvp(data) {
-  await new Promise((r) => setTimeout(r, 700))
-  return { ok: true, saved: false, data }
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
+import { db } from './firebase.js'
+
+export async function submitRsvp({ name, attending, companions }) {
+  const safeCompanions = attending ? companions : 0
+  const totalGuests = attending ? 1 + safeCompanions : 0
+  const response = {
+    name,
+    attending,
+    companions: safeCompanions,
+    totalGuests,
+    createdAt: serverTimestamp(),
+  }
+
+  const saved = await addDoc(collection(db, 'rsvps'), response)
+  return { ok: true, saved: true, id: saved.id }
 }

@@ -33,7 +33,7 @@ export default function RSVPForm() {
       {status === 'done' ? (
         <div className="done" role="status">
           <p>{f.attend === 'yes' ? 'تم تسجيل حضوركم، ننتظركم بكل محبة.' : 'تم تسجيل اعتذاركم، شكرًا لكم على اهتمامكم.'}</p>
-          <p className="demo">نسخة تجريبية — لا يتم حفظ البيانات بصورة دائمة.</p>
+          <p className="demo">تم حفظ ردكم بنجاح.</p>
           <button className="link" onClick={() => setStatus('idle')}>تعديل الرد</button>
         </div>
       ) : (
