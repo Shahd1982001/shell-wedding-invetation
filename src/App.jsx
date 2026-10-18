@@ -18,6 +18,7 @@ export default function App() {
   const veil = useRef(null)
   const autoPlayRef = useRef(false)
   const pauseTarget = useRef('')
+  const skippedTargets = useRef(new Set())
   const programmaticScroll = useRef(false)
   const reduce = useReducedMotion()
 
@@ -48,6 +49,7 @@ export default function App() {
     }
 
     const stopAtTarget = (key) => {
+      if (skippedTargets.current.has(key)) return
       if (pauseTarget.current === key) return
       pauseTarget.current = key
       autoPlayRef.current = false
@@ -60,11 +62,14 @@ export default function App() {
       previous = now
       const activeTarget = Object.keys(targets).find((key) => isVisible(targets[key]()))
 
-      if (pauseTarget.current && !isVisible(targets[pauseTarget.current]())) pauseTarget.current = ''
+      if (pauseTarget.current && !isVisible(targets[pauseTarget.current]())) {
+        skippedTargets.current.delete(pauseTarget.current)
+        pauseTarget.current = ''
+      }
       if (autoPlayRef.current && activeTarget && pauseTarget.current !== activeTarget) stopAtTarget(activeTarget)
       if (autoPlayRef.current && !activeTarget) {
         programmaticScroll.current = true
-        window.scrollBy(0, elapsed * 0.035)
+        window.scrollBy(0, elapsed * 0.045)
         window.setTimeout(() => { programmaticScroll.current = false }, 0)
       }
       frame = requestAnimationFrame(tick)
@@ -88,7 +93,10 @@ export default function App() {
   }, [stage, reduce])
 
   const changeAutoPlay = (next, reason = '') => {
-    if (next && pauseReason) pauseTarget.current = pauseReason === 'manual' ? '' : pauseReason
+    if (next && pauseReason !== 'manual') {
+      skippedTargets.current.add(pauseReason)
+      pauseTarget.current = ''
+    }
     autoPlayRef.current = next
     setAutoPlay(next)
     if (next) setPauseReason('')
@@ -97,6 +105,7 @@ export default function App() {
 
   const enter = () => {
     window.scrollTo(0, 0)
+    skippedTargets.current.clear()
     setStage('story')
     changeAutoPlay(true)
   }
@@ -104,7 +113,7 @@ export default function App() {
     gsap.to(veil.current, {
       opacity: 1, duration: 1.4, ease: 'power2.inOut',
       onComplete: () => {
-        window.scrollTo(0, 0);         setRun((n) => n + 1); setStage('intro'); changeAutoPlay(false)
+        window.scrollTo(0, 0); skippedTargets.current.clear(); setRun((n) => n + 1); setStage('intro'); changeAutoPlay(false)
         gsap.to(veil.current, { opacity: 0, duration: 1.6, delay: 0.3 })
       },
     })
