@@ -10,8 +10,6 @@ h1,h2,h3,.ayah,.names,.month{font-family:'Amiri',serif;font-weight:700}
 .bg{position:fixed;inset:0;z-index:-2;background:var(--hall-image) center/cover no-repeat,var(--deep)}
 .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,36,42,.35),rgba(6,36,42,.55))}
 .veil{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:200}
-@media (max-width:600px){.stage{--w:min(88vw,52svh)}.lead{font-size:clamp(1.35rem,6.5vw,2rem)}.ayah{font-size:clamp(1.2rem,5.8vw,1.8rem);line-height:1.9}}
-
 /* الافتتاحية */
 .intro{position:fixed;inset:0;z-index:50;background:linear-gradient(135deg,rgba(3,20,24,.9),rgba(6,55,62,.82)),#06242a;overflow:hidden;isolation:isolate}
 .intro::before{content:"";position:absolute;inset:-34px;z-index:-1;background:var(--hall-image) center/cover no-repeat;filter:blur(22px) saturate(.72);transform:scale(1.12);opacity:.68}
@@ -130,5 +128,41 @@ select option{color:#222}
 .lbl{font-size:.95rem;color:var(--gold2)}
 @keyframes breathe{50%{transform:scale(1.05);box-shadow:0 0 56px 14px rgba(255,240,200,.5),inset -6px -8px 14px rgba(120,110,80,.35)}}
 
-@media (max-width:520px){.sound-toggle span{display:none}.venue-actions{flex-direction:column;width:min(88vw,300px)}.venue-actions .btn-gold{width:100%}.calbox{width:min(80vw,310px);gap:8px}.month{font-size:1.55rem}.day{font-size:.78rem}.time{font-size:.9rem}.count{gap:3px}.count div{min-width:49px;padding-inline:2px}.count strong{font-size:1.55rem}.count small{font-size:.68rem}.noteStage{width:min(74vw,290px)}.paper{padding:14px 12px}.paper h3{font-size:1.15rem}.paper ul{font-size:.8rem;line-height:1.5}.wax-seal{width:70px}}
+@media (max-width:520px){.sound-toggle span{display:none}.venue-actions{flex-direction:column;width:min(88vw,300px)}.venue-actions .btn-gold{width:100%}}
+@media (max-width:600px){
+  .stage{--w:min(84vw,45svh)}
+  .hero{top:max(2svh,12px);padding-inline:12px}
+  .logo{width:clamp(96px,25vw,132px)}
+  .names{font-size:clamp(1.65rem,7.5vw,2.35rem)}
+  .sub{font-size:clamp(.78rem,3.2vw,.98rem)}
+  .lead{font-size:clamp(1.25rem,6vw,1.85rem);line-height:1.75}
+  .welcome-content{gap:12px;max-width:calc(100vw - 36px)}
+  .ayah{font-size:clamp(1.1rem,5.4vw,1.65rem);line-height:1.8}
+  .calbox{width:min(78vw,300px);gap:8px}
+  .month{font-size:1.5rem}
+  .day{font-size:.76rem}
+  .time{font-size:.88rem}
+  .count{gap:3px}
+  .count div{min-width:46px;padding-inline:2px}
+  .count strong{font-size:1.5rem}
+  .count small{font-size:.66rem}
+  main>section:not(.story){padding-inline:16px}
+  .noteStage{width:min(68vw,260px);margin-block:28px 12px}
+  .paper{padding:12px 10px}
+  .paper h3{font-size:1.1rem}
+  .paper ul{font-size:.76rem;line-height:1.45}
+  .wax-seal{width:64px}
+  form{width:min(100%,380px)}
+}
+@media (min-width:601px) and (max-width:1100px){
+  .stage{--w:min(62vw,52svh)}
+  .noteStage{width:min(52vw,330px)}
+  .calbox{width:min(55vw,360px)}
+}
+@media (min-width:1101px){
+  .stage{--w:min(34vw,430px)}
+  .noteStage{width:min(34vw,360px)}
+  .calbox{width:min(34vw,390px)}
+  main>section:not(.story){padding-inline:clamp(32px,8vw,140px)}
+}
 @media (prefers-reduced-motion:reduce){.intro-hint.show,.pearl,.hint b,.swipe-hand,.bubbles i{animation:none}}
