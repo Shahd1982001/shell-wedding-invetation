@@ -42,7 +42,7 @@ h1,h2,h3,.ayah,.names,.month{font-family:'Amiri',serif;font-weight:700}
 .half{position:absolute;inset:0;visibility:hidden;opacity:0}
 .half.l{clip-path:inset(0 67% 0 0)}.half.r{clip-path:inset(0 0 0 33%)}
 .hero{position:absolute;top:max(3svh,16px);inset-inline:0;z-index:4;text-align:center;pointer-events:none;padding-inline:16px}
-.logo{width:clamp(122px,17svh,170px);height:auto;filter:brightness(0) saturate(100%) invert(48%) sepia(42%) saturate(1020%) hue-rotate(137deg) brightness(88%) contrast(92%) drop-shadow(0 2px 8px rgba(0,0,0,.38))}
+.logo{width:clamp(122px,17svh,170px);height:auto;filter:brightness(0) saturate(100%) invert(78%) sepia(35%) saturate(720%) hue-rotate(359deg) brightness(100%) contrast(91%) drop-shadow(0 2px 8px rgba(0,0,0,.48))}
 .names{display:flex;justify-content:center;align-items:center;gap:.5em;font-size:clamp(1.8rem,7vw,3.1rem);color:var(--ivory);text-shadow:0 2px 14px rgba(0,0,0,.45);line-height:1.15}
 .names i{font-style:normal;color:var(--gold);font-size:.65em}
 .sub{font-size:clamp(.9rem,3.4vw,1.1rem);color:var(--gold2);text-shadow:0 1px 8px rgba(0,0,0,.5)}
