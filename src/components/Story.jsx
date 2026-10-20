@@ -32,6 +32,7 @@ export default function Story({ reduce }) {
         .to(q('.dim'), { opacity: 1, duration: 0.5 }, 0.9)
         .fromTo(q('.welcome'), from, fadeIn, 1.35).to(q('.welcome'), fadeOut, 3.25)
         .fromTo(q('.cal'), from, fadeIn, 3.45)
+        .to(q('.cal'), { autoAlpha: 0, y: -24, duration: 0.75, ease: 'power1.inOut' }, 4.05)
         .to(q('.couple.main'), { autoAlpha: 0, scale: 1.04, duration: reduce ? 0.35 : 0.6 }, 4.15)
         .to(q('.dim'), { opacity: 0, duration: reduce ? 0.5 : 0.8, ease: 'power1.inOut' }, 4.15)
     }, root)
