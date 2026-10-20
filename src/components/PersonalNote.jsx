@@ -20,12 +20,14 @@ export default function PersonalNote({ reduce }) {
       }
       const parts = q('.env-back, .env-front')
       tlRef.current = gsap.timeline({ paused: true, defaults: { ease: 'power2.inOut' } })
+        .set(q('.env'), { overflow: 'hidden' })
         .to(q('.ribbon'), { autoAlpha: 0, scale: 1.08, duration: 0.5 })
         .to(q('.flap'), { rotationX: 180, duration: reduce ? 0.3 : 1 }, 0.3)
         .set(q('.flap'), { zIndex: 1 }, 0.8)
         .to(q('.paper'), { yPercent: -62, duration: reduce ? 0.3 : 1.1, ease: 'power2.out' }, 1.0)
         .to(parts.concat(q('.flap')), { autoAlpha: 0, y: 50, duration: 0.9 }, 2.1)
-        .to(q('.paper'), { yPercent: -6, scale: 1.06, duration: 0.9 }, 2.1)
+        .set(q('.env'), { overflow: 'visible' }, 2.1)
+        .to(q('.paper'), { yPercent: -32, scale: 1.04, duration: 0.9 }, 2.1)
     }, sec)
     return () => ctx.revert()
   }, [reduce])
@@ -40,10 +42,9 @@ export default function PersonalNote({ reduce }) {
 
   return (
     <section className="note" ref={sec} aria-label="الملاحظات وتأكيد الحضور">
-      <h2 className="sec-title">الملاحظات وتأكيد الحضور</h2>
       <div className="noteStage">
         <div className="env3d">
-          <div className={`env${open ? ' is-open' : ''}`}>
+          <div className="env">
             <div className="env-back" />
             <div className="paper">
               <h3>{wedding.notes.title}</h3>
@@ -62,7 +63,6 @@ export default function PersonalNote({ reduce }) {
           </div>
         </div>
       </div>
-      <p className="tap">{open ? 'اضغطي في أي مكان للمتابعة' : 'اضغطي على الشريط لفتح الظرف'}</p>
       {open && <button className="link" onClick={toggle}>إغلاق الظرف</button>}
     </section>
   )
