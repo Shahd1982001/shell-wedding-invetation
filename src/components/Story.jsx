@@ -4,9 +4,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import WeddingScene from './WeddingScene.jsx'
 import WelcomeScene from './WelcomeScene.jsx'
 import CalendarCountdown from './CalendarCountdown.jsx'
-import VenueScene from './VenueScene.jsx'
 
-// مشهد واحد مثبّت: الأسماء ← تكبير الفستان ← ترحيب/آية ← تقويم/عداد ← الفستان ينفلق كستارة ← الصالة
+// مشهد واحد مثبّت: الأسماء ← تكبير الفستان ← ترحيب/آية ← التقويم والموعد والمكان
 export default function Story({ reduce }) {
   const root = useRef(null)
   const refresh = useRef(() => ScrollTrigger.refresh())
@@ -32,11 +31,9 @@ export default function Story({ reduce }) {
         .to(wrap, { scale: S, x: () => (reduce ? 0 : toDress().x), y: () => (reduce ? 0 : toDress().y), duration: 1.25, ease: 'power1.inOut' }, 0.2)
         .to(q('.dim'), { opacity: 1, duration: 0.5 }, 0.9)
         .fromTo(q('.welcome'), from, fadeIn, 1.35).to(q('.welcome'), fadeOut, 3.25)
-        .fromTo(q('.cal'), from, fadeIn, 3.45).to(q('.cal'), fadeOut, 4.35)
-        // يتحول الفستان بهدوء إلى خلفية الصالة عند نهاية التاريخ
+        .fromTo(q('.cal'), from, fadeIn, 3.45).to(q('.cal'), fadeOut, 5.05)
         .to(q('.couple.main'), { autoAlpha: 0, scale: 1.04, duration: reduce ? 0.35 : 0.6 }, 4.55)
         .to(q('.dim'), { opacity: 0, duration: reduce ? 0.5 : 0.8, ease: 'power1.inOut' }, 4.55)
-        .fromTo(q('.venue'), { autoAlpha: 0, scale: 0.98 }, { autoAlpha: 1, scale: 1, duration: reduce ? 0.35 : 0.6 }, 4.8)
         .to({}, { duration: 0.35 })
     }, root)
     const onLoad = () => ScrollTrigger.refresh()
@@ -46,9 +43,8 @@ export default function Story({ reduce }) {
 
   return (
     <section className="story" ref={root} aria-label="قصتنا">
-      <div className="stage">
-        <VenueScene />
-        <WeddingScene onImageLoad={() => refresh.current()} />
+  <div className="stage">
+    <WeddingScene onImageLoad={() => refresh.current()} />
         <div className="dim" aria-hidden="true" />
         <WelcomeScene />
         <CalendarCountdown />

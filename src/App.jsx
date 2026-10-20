@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { wedding } from './config/wedding.js'
 import IntroShell from './components/IntroShell.jsx'
 import Story from './components/Story.jsx'
 import PersonalNote from './components/PersonalNote.jsx'
@@ -10,32 +9,6 @@ import ClosingShell from './components/ClosingShell.jsx'
 import useReducedMotion from './hooks/useReducedMotion.js'
 
 gsap.registerPlugin(ScrollTrigger)
-
-function EventSummary() {
-  const when = new Date(wedding.dateTime)
-  const weekday = new Intl.DateTimeFormat('ar-EG', { weekday: 'long' }).format(when)
-  const date = new Intl.DateTimeFormat('ar-EG', {
-    day: 'numeric', month: 'long', year: 'numeric',
-  }).format(when)
-  const time = new Intl.DateTimeFormat('ar-EG', {
-    hour: 'numeric', minute: '2-digit', hour12: true,
-  }).format(when)
-
-  return (
-    <section className="event-summary" aria-label="معلومات الحفل">
-      <div className="event-card">
-        <p className="eyebrow">الموعد والمكان</p>
-        <h2>{weekday}</h2>
-        <p className="summary-date">{date}</p>
-        <p className="summary-time">{time}</p>
-        <p className="summary-venue">{wedding.venueName} — {wedding.venueCity}</p>
-        <div className="summary-actions">
-          <a className="btn-gold" href={wedding.mapsUrl} target="_blank" rel="noopener noreferrer">عرض الموقع</a>
-        </div>
-      </div>
-    </section>
-  )
-}
 
 export default function App() {
   const [stage, setStage] = useState('intro')
@@ -73,7 +46,6 @@ export default function App() {
       ) : (
         <main>
           <Story reduce={reduce} />
-          <EventSummary />
           <section className="notice-box" aria-label="ملاحظات مهمة">
             <h2 className="sec-title">ملاحظات مهمة</h2>
             <ul>

@@ -53,6 +53,12 @@ export default function CalendarCountdown() {
           </div>
         )}
         <a className="calendar-link" href={calendarUrl} target="_blank" rel="noopener noreferrer">إضافة الموعد للتقويم</a>
+        <div className="cal-location">
+          <p className="eyebrow">مكان الحفل</p>
+          <p className="cal-venue">{wedding.venueName}</p>
+          <p className="cal-city">{wedding.venueCity}</p>
+          <a className="btn-gold" href={wedding.mapsUrl} target="_blank" rel="noopener noreferrer">عرض موقع الصالة</a>
+        </div>
       </div>
     </section>
   )

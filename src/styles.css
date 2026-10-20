@@ -68,6 +68,11 @@ blockquote footer{margin-top:14px;font-size:.95rem;opacity:.85}
 .count strong{font-family:'Amiri',serif;font-size:1.75rem;line-height:1.1;font-variant-numeric:tabular-nums}
 .count small{font-size:.75rem;color:var(--gold2)}
 .calendar-link{color:var(--gold2);font-size:.88rem;text-decoration:underline;text-underline-offset:4px}
+.cal-location{display:grid;gap:4px;justify-items:center;margin-top:6px;padding-top:10px;border-top:1px solid rgba(217,184,115,.35)}
+.cal-location .eyebrow{font-size:.78rem}
+.cal-venue{font-family:'Amiri',serif;font-size:1.2rem;color:var(--gold2)}
+.cal-city{font-size:.86rem;opacity:.9;margin-bottom:4px}
+.cal-location .btn-gold{padding:9px 22px;min-height:42px;font-size:.9rem}
 .over{font-family:'Amiri',serif;font-size:1.6rem;color:var(--gold2)}
 .venue{position:absolute;inset:0;z-index:1;display:grid;place-content:center;justify-items:center;gap:8px;text-align:center;padding:24px;visibility:hidden;opacity:0;background:linear-gradient(rgba(6,36,42,.28),rgba(6,36,42,.4)),radial-gradient(circle,rgba(6,36,42,.18),rgba(6,36,42,.42) 70%);backdrop-filter:blur(2px)}
 .eyebrow{color:var(--gold);letter-spacing:.2em;font-size:.9rem}
@@ -103,12 +108,7 @@ main>section:not(.story){position:relative;padding:12svh 20px;display:grid;justi
 .tap{color:var(--gold2);min-height:1.7em}
 .link{color:var(--gold2);text-decoration:underline;text-underline-offset:4px;min-height:44px;padding:0 10px}
 
-.event-summary{width:100%;display:grid;place-items:center;padding:4svh 20px 0}
-.event-card,.notice-box{width:min(92vw,520px);padding:22px 18px;border:1px solid rgba(217,184,115,.3);border-radius:22px;background:rgba(7,34,40,.45);box-shadow:0 14px 38px rgba(0,0,0,.18);backdrop-filter:blur(4px)}
-.event-card{display:grid;gap:8px;text-align:center}
-.event-card h2{font-size:clamp(1.6rem,5vw,2.6rem);color:var(--gold2)}
-.summary-date,.summary-time,.summary-venue{font-size:clamp(.98rem,2.8vw,1.2rem);color:var(--ivory)}
-.summary-actions{display:flex;justify-content:center;margin-top:10px}
+.notice-box{width:min(92vw,520px);padding:22px 18px;border:1px solid rgba(217,184,115,.3);border-radius:22px;background:rgba(7,34,40,.45);box-shadow:0 14px 38px rgba(0,0,0,.18);backdrop-filter:blur(4px)}
 .notice-box{margin:0 auto;display:grid;gap:10px}
 .notice-box ul{list-style:none;padding:0;margin:0;display:grid;gap:8px;text-align:right;font-size:1rem;color:var(--ivory)}
 .notice-box li::before{content:"•";color:var(--gold);margin-inline-end:8px}
