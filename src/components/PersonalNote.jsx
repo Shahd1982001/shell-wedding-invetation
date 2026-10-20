@@ -5,7 +5,7 @@ import { wedding } from '../config/wedding.js'
 import { asset } from '../config/assets.js'
 import RSVPForm from './RSVPForm.jsx'
 
-// ظرف مقفل ثلاثي الأبعاد؛ يفتح الملاحظات ثم يظهر تحته تأكيد الحضور
+// ظرف مقفل ثلاثي الأبعاد؛ تتحول ورقته إلى بطاقة طويلة للملاحظات وتأكيد الحضور
 export default function PersonalNote({ reduce }) {
   const sec = useRef(null), tlRef = useRef(null)
   const [open, setOpen] = useState(false)
@@ -43,12 +43,14 @@ export default function PersonalNote({ reduce }) {
       <h2 className="sec-title">الملاحظات وتأكيد الحضور</h2>
       <div className="noteStage">
         <div className="env3d">
-          <div className="env">
+          <div className={`env${open ? ' is-open' : ''}`}>
             <div className="env-back" />
             <div className="paper">
               <h3>{wedding.notes.title}</h3>
               <ul>{wedding.notes.items.map((t) => <li key={t}>{t}</li>)}</ul>
               <p className="thanks">{wedding.notes.closing}</p>
+              <div className="paper-divider" />
+              <RSVPForm />
             </div>
             <div className="env-front" />
             <div className="flap" />
@@ -62,11 +64,6 @@ export default function PersonalNote({ reduce }) {
       </div>
       <p className="tap">{open ? 'اضغطي في أي مكان للمتابعة' : 'اضغطي على الشريط لفتح الظرف'}</p>
       {open && <button className="link" onClick={toggle}>إغلاق الظرف</button>}
-      {open && (
-        <div className="note-rsvp">
-          <RSVPForm />
-        </div>
-      )}
     </section>
   )
 }

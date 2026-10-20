@@ -24,7 +24,7 @@ export default function Story({ reduce }) {
 
       const tl = gsap.timeline({
         defaults: { ease: 'none' },
-        scrollTrigger: { trigger: root.current, start: 'top top', end: () => '+=' + window.innerHeight * 5.8, pin: true, scrub: 1.2, anticipatePin: 1, invalidateOnRefresh: true },
+        scrollTrigger: { trigger: root.current, start: 'top top', end: () => '+=' + window.innerHeight * 5.2, pin: true, scrub: 1.2, anticipatePin: 1, invalidateOnRefresh: true },
       })
       tl.to(q('.hero'), { autoAlpha: 0, y: -40, duration: 1.2 }, 0)
         .to(q('.hint'), { autoAlpha: 0, duration: 0.4 }, 0)
