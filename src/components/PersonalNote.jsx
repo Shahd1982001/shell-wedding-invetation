@@ -20,7 +20,7 @@ export default function PersonalNote({ reduce }) {
           ease: 'power2.out',
           scrollTrigger: {
             trigger: sec.current,
-            start: 'top 82%',
+            start: 'top 94%',
             once: true,
           },
         })

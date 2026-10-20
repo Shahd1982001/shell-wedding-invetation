@@ -24,17 +24,16 @@ export default function Story({ reduce }) {
 
       const tl = gsap.timeline({
         defaults: { ease: 'none' },
-        scrollTrigger: { trigger: root.current, start: 'top top', end: () => '+=' + window.innerHeight * 5.2, pin: true, scrub: 1.2, anticipatePin: 1, invalidateOnRefresh: true },
+        scrollTrigger: { trigger: root.current, start: 'top top', end: () => '+=' + window.innerHeight * 4.75, pin: true, scrub: 1.2, anticipatePin: 1, invalidateOnRefresh: true },
       })
       tl.to(q('.hero'), { autoAlpha: 0, y: -40, duration: 1.2 }, 0)
         .to(q('.hint'), { autoAlpha: 0, duration: 0.4 }, 0)
         .to(wrap, { scale: S, x: () => (reduce ? 0 : toDress().x), y: () => (reduce ? 0 : toDress().y), duration: 1.25, ease: 'power1.inOut' }, 0.2)
         .to(q('.dim'), { opacity: 1, duration: 0.5 }, 0.9)
         .fromTo(q('.welcome'), from, fadeIn, 1.35).to(q('.welcome'), fadeOut, 3.25)
-        .fromTo(q('.cal'), from, fadeIn, 3.45).to(q('.cal'), fadeOut, 5.05)
-        .to(q('.couple.main'), { autoAlpha: 0, scale: 1.04, duration: reduce ? 0.35 : 0.6 }, 4.55)
-        .to(q('.dim'), { opacity: 0, duration: reduce ? 0.5 : 0.8, ease: 'power1.inOut' }, 4.55)
-        .to({}, { duration: 0.35 })
+        .fromTo(q('.cal'), from, fadeIn, 3.45)
+        .to(q('.couple.main'), { autoAlpha: 0, scale: 1.04, duration: reduce ? 0.35 : 0.6 }, 4.15)
+        .to(q('.dim'), { opacity: 0, duration: reduce ? 0.5 : 0.8, ease: 'power1.inOut' }, 4.15)
     }, root)
     const onLoad = () => ScrollTrigger.refresh()
     window.addEventListener('load', onLoad)

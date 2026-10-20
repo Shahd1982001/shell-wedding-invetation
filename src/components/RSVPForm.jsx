@@ -52,15 +52,13 @@ export default function RSVPForm() {
             </div>
             {err.attend && <p className="err" id="e-att" role="alert">{err.attend}</p>}
           </fieldset>
-          {f.attend === 'yes' && (
-            <div className="field">
-              <label htmlFor="g-comp">عدد المرافقين (حتى {max})</label>
-              <select id="g-comp" value={f.companions} onChange={(e) => set('companions', +e.target.value)}>
-                {Array.from({ length: max + 1 }, (_, i) => <option key={i} value={i}>{i}</option>)}
-              </select>
-              {err.companions && <p className="err" role="alert">{err.companions}</p>}
-            </div>
-          )}
+          <div className={`field companions-field${f.attend === 'yes' ? ' visible' : ''}`} aria-hidden={f.attend !== 'yes'}>
+            <label htmlFor="g-comp">عدد المرافقين (حتى {max})</label>
+            <select id="g-comp" value={f.companions} disabled={f.attend !== 'yes'} onChange={(e) => set('companions', Number(e.target.value))}>
+              {Array.from({ length: max + 1 }, (_, i) => <option key={i} value={i}>{i}</option>)}
+            </select>
+            {err.companions && <p className="err" role="alert">{err.companions}</p>}
+          </div>
           <button className="btn-gold" type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'جارٍ الإرسال…' : 'إرسال الرد'}</button>
           {status === 'error' && <p className="err" role="alert">تعذّر الإرسال، يرجى المحاولة مرة أخرى.</p>}
         </form>
