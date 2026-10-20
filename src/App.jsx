@@ -4,7 +4,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import IntroShell from './components/IntroShell.jsx'
 import Story from './components/Story.jsx'
 import PersonalNote from './components/PersonalNote.jsx'
-import RSVPForm from './components/RSVPForm.jsx'
 import ClosingShell from './components/ClosingShell.jsx'
 import useReducedMotion from './hooks/useReducedMotion.js'
 
@@ -46,15 +45,7 @@ export default function App() {
       ) : (
         <main>
           <Story reduce={reduce} />
-          <section className="notice-box" aria-label="ملاحظات مهمة">
-            <h2 className="sec-title">ملاحظات مهمة</h2>
-            <ul>
-              <li>يرجى عدم اصطحاب الأطفال.</li>
-              <li>نرجو عدم التصوير أثناء الحفل.</li>
-              <li>شكرًا لتفهمكم ولطفكم.</li>
-            </ul>
-          </section>
-          <RSVPForm />
+          <PersonalNote reduce={reduce} />
           <ClosingShell onReplay={replay} />
         </main>
       )}

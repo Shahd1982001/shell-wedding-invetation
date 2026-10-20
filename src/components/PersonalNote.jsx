@@ -3,8 +3,9 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { wedding } from '../config/wedding.js'
 import { asset } from '../config/assets.js'
+import RSVPForm from './RSVPForm.jsx'
 
-// ظرف مقفل ثلاثي الأبعاد؛ الضغط على الشريط يفتح الغطاء وتخرج الورقة بالملاحظات
+// ظرف مقفل ثلاثي الأبعاد؛ يفتح الملاحظات ثم يظهر تحته تأكيد الحضور
 export default function PersonalNote({ reduce }) {
   const sec = useRef(null), tlRef = useRef(null)
   const [open, setOpen] = useState(false)
@@ -38,8 +39,8 @@ export default function PersonalNote({ reduce }) {
   }
 
   return (
-    <section className="note" ref={sec} aria-label={wedding.notes.title}>
-      <h2 className="sec-title">{wedding.notes.title}</h2>
+    <section className="note" ref={sec} aria-label="الملاحظات وتأكيد الحضور">
+      <h2 className="sec-title">الملاحظات وتأكيد الحضور</h2>
       <div className="noteStage">
         <div className="env3d">
           <div className="env">
@@ -61,6 +62,11 @@ export default function PersonalNote({ reduce }) {
       </div>
       <p className="tap">{open ? 'اضغطي في أي مكان للمتابعة' : 'اضغطي على الشريط لفتح الظرف'}</p>
       {open && <button className="link" onClick={toggle}>إغلاق الظرف</button>}
+      {open && (
+        <div className="note-rsvp">
+          <RSVPForm />
+        </div>
+      )}
     </section>
   )
 }
