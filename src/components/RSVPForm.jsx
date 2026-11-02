@@ -1,18 +1,35 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { wedding } from '../config/wedding.js'
-import { submitRsvp } from '../services/rsvpService.js'
+import { plainDateLabel } from '../utils/event.js'
+import { forgetSavedRsvp, getSavedRsvp, submitRsvp, warmupRsvp } from '../services/rsvpService.js'
+
+const EMPTY = { name: '', attend: '', companions: 0 }
+const fromSaved = (s) => (s ? { name: s.name || '', attend: s.attending ? 'yes' : 'no', companions: s.companions || 0 } : EMPTY)
 
 export default function RSVPForm() {
   const max = wedding.rsvp.maxCompanions
-  const [f, setF] = useState({ name: '', attend: '', companions: 0 })
+  const deadline = plainDateLabel(wedding.rsvp.deadline)
+  // لو الضيف ردّ سابقًا من نفس الجهاز نعرض له ردّه بدل نموذج فارغ
+  const [f, setF] = useState(() => fromSaved(getSavedRsvp()))
   const [err, setErr] = useState({})
-  const [status, setStatus] = useState('idle') // idle | sending | done | error
-  const nameRef = useRef(null)
+  const [status, setStatus] = useState(() => (getSavedRsvp() ? 'done' : 'idle')) // idle | sending | done | error
+  const sec = useRef(null), nameRef = useRef(null)
   const set = (k, v) => setF((p) => ({ ...p, [k]: v }))
+
+  // تجهيز الاتصال بقاعدة البيانات قبل وصول الضيف للنموذج
+  useEffect(() => {
+    const el = sec.current
+    if (!el || !('IntersectionObserver' in window)) { warmupRsvp(); return }
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) { warmupRsvp(); io.disconnect() }
+    }, { rootMargin: '900px 0px' })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
 
   const validate = () => {
     const e = {}
-    if (f.name.trim().length < 3) e.name = 'يرجى كتابة الاسم (٣ أحرف على الأقل).'
+    if (f.name.trim().length < 2) e.name = 'يرجى كتابة الاسم الكريم.'
     if (!f.attend) e.attend = 'يرجى اختيار الحضور أو الاعتذار.'
     if (f.attend === 'yes' && (f.companions < 0 || f.companions > max)) e.companions = `الحد الأقصى للمرافقين ${max}.`
     return e
@@ -27,25 +44,32 @@ export default function RSVPForm() {
     catch { setStatus('error') }
   }
 
+  const another = () => { forgetSavedRsvp(); setF(EMPTY); setErr({}); setStatus('idle') }
+
   return (
-    <section className="rsvp" aria-labelledby="rsvp-t">
+    <section className="rsvp" ref={sec} aria-labelledby="rsvp-t">
       <h2 id="rsvp-t" className="sec-title">تأكيد الحضور</h2>
+      {deadline && status !== 'done' && <p className="rsvp-deadline">نرجو تأكيد الحضور قبل {deadline}</p>}
       {status === 'done' ? (
         <div className="done" role="status">
           <p>{f.attend === 'yes' ? 'تم تسجيل حضوركم، ننتظركم بكل محبة.' : 'تم تسجيل اعتذاركم، شكرًا لكم على اهتمامكم.'}</p>
-          <p className="demo">تم حفظ ردكم بنجاح.</p>
-          <button className="link" onClick={() => setStatus('idle')}>تعديل الرد</button>
+          <p className="demo">تم حفظ ردكم بنجاح{f.name ? ` باسم «${f.name.trim()}»` : ''}.</p>
+          <div className="done-actions">
+            <button className="link" onClick={() => setStatus('idle')}>تعديل الرد</button>
+            <button className="link" onClick={another}>إرسال رد باسم شخص آخر</button>
+          </div>
         </div>
       ) : (
         <form onSubmit={submit} noValidate>
           <div className="field">
             <label htmlFor="g-name">الاسم الكريم</label>
             <input id="g-name" ref={nameRef} value={f.name} onChange={(e) => set('name', e.target.value)} autoComplete="name"
+              placeholder="الاسم واللقب" maxLength={80}
               aria-invalid={!!err.name} aria-describedby={err.name ? 'e-name' : undefined} />
             {err.name && <p className="err" id="e-name" role="alert">{err.name}</p>}
           </div>
           <fieldset className="field" aria-describedby={err.attend ? 'e-att' : undefined}>
-            <legend>هل ستتشرفون بالحضور؟</legend>
+            <legend>هل ستشرّفوننا بحضوركم؟</legend>
             <div className="choices">
               <label className={f.attend === 'yes' ? 'on' : ''}><input type="radio" name="att" value="yes" checked={f.attend === 'yes'} onChange={() => set('attend', 'yes')} />سأحضر بإذن الله</label>
               <label className={f.attend === 'no' ? 'on' : ''}><input type="radio" name="att" value="no" checked={f.attend === 'no'} onChange={() => set('attend', 'no')} />أعتذر عن الحضور</label>
@@ -60,7 +84,7 @@ export default function RSVPForm() {
             {err.companions && <p className="err" role="alert">{err.companions}</p>}
           </div>
           <button className="btn-gold" type="submit" disabled={status === 'sending'}>{status === 'sending' ? 'جارٍ الإرسال…' : 'إرسال الرد'}</button>
-          {status === 'error' && <p className="err" role="alert">تعذّر الإرسال، يرجى المحاولة مرة أخرى.</p>}
+          {status === 'error' && <p className="err" role="alert">تعذّر الإرسال، تأكدوا من الاتصال بالإنترنت وحاولوا مرة أخرى.</p>}
         </form>
       )}
     </section>

@@ -4,10 +4,36 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#06242a" />
-    <title>دعوة زفاف — نسرين ومنصور</title>
+    <title>%APP_TITLE%</title>
+    <meta name="description" content="%APP_DESC%" />
+
+    <!-- معاينة الرابط في واتساب وماسنجر وغيرها -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ar_LY" />
+    <meta property="og:title" content="%APP_TITLE%" />
+    <meta property="og:description" content="%APP_DESC%" />
+    <meta property="og:url" content="%SITE_URL%/" />
+    <meta property="og:image" content="%SITE_URL%/og-image.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="%APP_TITLE%" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet" />
+
+    <!-- لؤلؤة انتظار تظهر فورًا إلى أن تُحمَّل الدعوة -->
+    <style>
+      .boot{position:fixed;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 42%,rgba(16,117,125,.35),transparent 46%),linear-gradient(135deg,#031418,#06373e)}
+      .boot i{width:58px;height:58px;border-radius:50%;background:radial-gradient(circle at 34% 28%,#fff 0,#fbf6ea 30%,#e4dcc6 62%,#b9ad90 100%);box-shadow:0 0 36px 8px rgba(255,240,200,.28),inset -5px -7px 12px rgba(120,110,80,.35);animation:boot 2.4s ease-in-out infinite}
+      @keyframes boot{50%{transform:scale(1.08);box-shadow:0 0 52px 14px rgba(255,240,200,.45),inset -5px -7px 12px rgba(120,110,80,.35)}}
+      @media (prefers-reduced-motion:reduce){.boot i{animation:none}}
+    </style>
   </head>
-  <body><div id="root"></div><script type="module" src="/src/main.jsx"></script></body>
+  <body><div id="root"><div class="boot" aria-hidden="true"><i></i></div></div><script type="module" src="/src/main.jsx"></script></body>
 </html>
