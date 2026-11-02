@@ -63,8 +63,7 @@ export default function RSVPForm() {
         <form onSubmit={submit} noValidate>
           <div className="field">
             <label htmlFor="g-name">الاسم الكريم</label>
-            <input id="g-name" ref={nameRef} value={f.name} onChange={(e) => set('name', e.target.value)} autoComplete="name"
-              placeholder="الاسم واللقب" maxLength={80}
+            <input id="g-name" ref={nameRef} value={f.name} onChange={(e) => set('name', e.target.value)} autoComplete="name" maxLength={80}
               aria-invalid={!!err.name} aria-describedby={err.name ? 'e-name' : undefined} />
             {err.name && <p className="err" id="e-name" role="alert">{err.name}</p>}
           </div>

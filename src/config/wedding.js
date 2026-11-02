@@ -43,8 +43,8 @@ export const wedding = {
   // الموسيقى: ضعي ملف الأغنية في public/assets/music/ بنفس الاسم
   // تبدأ عند الضغط على اللؤلؤة، ويستطيع الضيف كتمها من زر الصوت.
   music: {
-    src: 'music/love-story.mp3',
-    title: 'Indila — Love Story (Version Orchestrale)',
+    src: 'music/wedding-song.mp3',
+    title: 'Golden Brown × Love Story',
     start: 0, // ثانية البداية داخل الملف (لو كان الملف هو الأغنية كاملة)
     volume: 0.75,
   },
