@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
 import gsap from 'gsap'
+import { asset } from '../config/assets.js'
+import { isSoundEnabled, preloadMusic, startMusic } from '../services/music.js'
 
 const R = 3.35, AMAX = 1.15, D = 0.72, HINGE = -1.55
 
@@ -47,11 +49,42 @@ function glowTexture() {
   return new THREE.CanvasTexture(cv)
 }
 
+// رنّة قصيرة لحظة فتح اللؤلؤة
+function playChime() {
+  if (!isSoundEnabled()) return
+  const AudioContext = window.AudioContext || window.webkitAudioContext
+  if (!AudioContext) return
+  const audio = new AudioContext()
+  const gain = audio.createGain()
+  gain.gain.setValueAtTime(0.0001, audio.currentTime)
+  gain.gain.exponentialRampToValueAtTime(0.1, audio.currentTime + 0.05)
+  gain.gain.exponentialRampToValueAtTime(0.0001, audio.currentTime + 1.5)
+  gain.connect(audio.destination)
+  const notes = [392, 494, 587, 784]
+  notes.forEach((frequency, index) => {
+    const osc = audio.createOscillator()
+    const noteGain = audio.createGain()
+    osc.type = index === 0 ? 'sine' : 'triangle'
+    osc.frequency.setValueAtTime(frequency, audio.currentTime)
+    osc.detune.setValueAtTime(index * 3, audio.currentTime)
+    noteGain.gain.setValueAtTime(index === 0 ? 0.55 : 0.22, audio.currentTime)
+    noteGain.gain.exponentialRampToValueAtTime(0.0001, audio.currentTime + 1.45)
+    osc.connect(noteGain).connect(gain)
+    osc.start(audio.currentTime + index * 0.06)
+    osc.stop(audio.currentTime + 1.5)
+  })
+  window.setTimeout(() => audio.close(), 1700)
+}
+
 export default function IntroShell({ onDone, veilRef, reduce }) {
   const mount = useRef(null), btn = useRef(null), go = useRef(() => {})
-  const soundRef = useRef(true)
   const [phase, setPhase] = useState('closed') // closed | ready | going | fallback
-  const [soundOn, setSoundOn] = useState(true)
+
+  // نجهّز صورة العروسين والشعار والأغنية أثناء انفتاح الصدفة حتى تظهر مباشرة بعد الوميض
+  useEffect(() => {
+    ;['couples.webp', 'logo.webp'].forEach((name) => { const img = new Image(); img.decoding = 'async'; img.src = asset(name) })
+    preloadMusic()
+  }, [])
 
   useEffect(() => {
     const el = mount.current, b = btn.current
@@ -142,31 +175,6 @@ export default function IntroShell({ onDone, veilRef, reduce }) {
     // الضغط على اللؤلؤة
     let zoom
     go.current = () => {
-      if (soundRef.current) {
-        const AudioContext = window.AudioContext || window.webkitAudioContext
-        if (AudioContext) {
-          const audio = new AudioContext()
-          const gain = audio.createGain()
-          gain.gain.setValueAtTime(0.0001, audio.currentTime)
-          gain.gain.exponentialRampToValueAtTime(0.1, audio.currentTime + 0.05)
-          gain.gain.exponentialRampToValueAtTime(0.0001, audio.currentTime + 1.5)
-          gain.connect(audio.destination)
-          const notes = [392, 494, 587, 784]
-          notes.forEach((frequency, index) => {
-            const osc = audio.createOscillator()
-            const noteGain = audio.createGain()
-            osc.type = index === 0 ? 'sine' : 'triangle'
-            osc.frequency.setValueAtTime(frequency, audio.currentTime)
-            osc.detune.setValueAtTime(index * 3, audio.currentTime)
-            noteGain.gain.setValueAtTime(index === 0 ? 0.55 : 0.22, audio.currentTime)
-            noteGain.gain.exponentialRampToValueAtTime(0.0001, audio.currentTime + 1.45)
-            osc.connect(noteGain).connect(gain)
-            osc.start(audio.currentTime + index * 0.06)
-            osc.stop(audio.currentTime + 1.5)
-          })
-          window.setTimeout(() => audio.close(), 1700)
-        }
-      }
       const d = reduce ? 0.9 : 2.8
       zoom = gsap.timeline({ onComplete: onDone })
       zoom.to(st, { pscale: 1.85, duration: d, ease: 'power2.inOut' }, 0)
@@ -179,13 +187,14 @@ export default function IntroShell({ onDone, veilRef, reduce }) {
       open.kill(); zoom && zoom.kill(); cancelAnimationFrame(raf)
       window.removeEventListener('resize', resize)
       ;[geoLow, geoUp, geoPearl, tongue.geometry, shellMat, pearlMat, tongueMat, glow.material, glowTex, envRT, pm].forEach((o) => o.dispose && o.dispose())
-      renderer.dispose(); renderer.domElement.remove()
+      renderer.dispose(); renderer.forceContextLoss(); renderer.domElement.remove()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const click = () => {
     if (phase !== 'ready' && phase !== 'fallback') return
+    playChime(); startMusic()
     setPhase('going'); go.current()
   }
 
@@ -195,12 +204,9 @@ export default function IntroShell({ onDone, veilRef, reduce }) {
       <div className="bubbles" aria-hidden="true">
         <i /><i /><i /><i /><i /><i />
       </div>
-      <button className="sound-toggle" onClick={() => setSoundOn((value) => { soundRef.current = !value; return !value })} aria-label={soundOn ? 'كتم صوت الافتتاحية' : 'تشغيل صوت الافتتاحية'}>
-        {soundOn ? '♪' : '×'} <span>{soundOn ? 'الصوت' : 'صامت'}</span>
-      </button>
       <button ref={btn} className={`pearl-hit ${phase}`} onClick={click}
-        disabled={phase === 'closed' || phase === 'going'} aria-label="اضغطي على اللؤلؤة لفتح الدعوة" />
-      <p className={`intro-hint ${phase === 'ready' || phase === 'fallback' ? 'show' : ''}`} aria-live="polite">اضغطي على اللؤلؤة لفتح دعوتنا</p>
+        disabled={phase === 'closed' || phase === 'going'} aria-label="اضغطوا على اللؤلؤة لفتح الدعوة" />
+      <p className={`intro-hint ${phase === 'ready' || phase === 'fallback' ? 'show' : ''}`} aria-live="polite">اضغطوا على اللؤلؤة لفتح دعوتنا</p>
     </section>
   )
 }

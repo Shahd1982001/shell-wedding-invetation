@@ -6,7 +6,7 @@ export default function ClosingShell({ onReplay }) {
       <p className="signoff">{wedding.bride} <i>&amp;</i> {wedding.groom}</p>
       <button className="pearl-btn" onClick={onReplay}>
         <span className="pearl" aria-hidden="true" />
-        <span className="lbl">انقر هنا لإعادة المشهد</span>
+        <span className="lbl">اضغطوا لمشاهدة الدعوة من جديد</span>
       </button>
     </section>
   )

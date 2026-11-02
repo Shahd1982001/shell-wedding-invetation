@@ -1,6 +1,4 @@
-import { initializeApp } from 'firebase/app'
-import { getFirestore } from 'firebase/firestore'
-
+// إعدادات Firebase للويب ليست سرّية — الحماية الحقيقية في firestore.rules
 const config = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || 'AIzaSyAUgFY_pwlVYPdHTzsIRaCMvhR2FGY8234',
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'wedding-invitations-181a3.firebaseapp.com',
@@ -10,5 +8,11 @@ const config = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID || '1:468811674178:web:42026ddb7c8a56a76e73db',
 }
 
-const app = initializeApp(config)
-export const db = getFirestore(app)
+// Firebase يُحمَّل فقط عند الاقتراب من نموذج تأكيد الحضور، حتى تفتح الدعوة أسرع
+let ready = null
+export function loadFirestore() {
+  ready ||= Promise.all([import('firebase/app'), import('firebase/firestore')])
+    .then(([app, fs]) => ({ fs, db: fs.getFirestore(app.initializeApp(config)) }))
+    .catch((e) => { ready = null; throw e })
+  return ready
+}

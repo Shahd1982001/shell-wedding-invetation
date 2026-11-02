@@ -5,7 +5,9 @@ import IntroShell from './components/IntroShell.jsx'
 import Story from './components/Story.jsx'
 import PersonalNote from './components/PersonalNote.jsx'
 import ClosingShell from './components/ClosingShell.jsx'
+import SoundToggle from './components/SoundToggle.jsx'
 import useReducedMotion from './hooks/useReducedMotion.js'
+import { stopMusic } from './services/music.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -28,6 +30,7 @@ export default function App() {
     setStage('story')
   }
   const replay = () => {
+    stopMusic()
     gsap.to(veil.current, {
       opacity: 1, duration: 1.4, ease: 'power2.inOut',
       onComplete: () => {
@@ -49,6 +52,7 @@ export default function App() {
           <ClosingShell onReplay={replay} />
         </main>
       )}
+      <SoundToggle stage={stage} />
       <div className="veil" ref={veil} aria-hidden="true" />
     </>
   )
