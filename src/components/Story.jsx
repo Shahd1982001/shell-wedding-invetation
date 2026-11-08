@@ -5,7 +5,7 @@ import WeddingScene from './WeddingScene.jsx'
 import WelcomeScene from './WelcomeScene.jsx'
 import CalendarCountdown from './CalendarCountdown.jsx'
 
-// مشهد واحد مثبّت: الأسماء ← تكبير الفستان ← ترحيب/آية ← التقويم والموعد والمكان
+// مشهد واحد مثبّت: الأسماء ← تكبير الفستان ← الترحيب ← التقويم والموعد والمكان
 // كل مرحلة تختفي كاملًا قبل أن تبدأ التالية، والتقويم يثبت لحظة واضحًا قبل أن يتلاشى تدريجيًا.
 export default function Story({ reduce }) {
   const root = useRef(null)
@@ -30,10 +30,10 @@ export default function Story({ reduce }) {
         .to(q('.hint'), { autoAlpha: 0, duration: 0.4 }, 0)
         .to(wrap, { scale: S, x: () => (reduce ? 0 : toDress().x), y: () => (reduce ? 0 : toDress().y), duration: 1.25, ease: 'power1.inOut' }, 0.2)
         .to(q('.dim'), { opacity: 1, duration: 0.5 }, 0.9)
-        // الترحيب والآية
+        // الترحيب
         .fromTo(q('.welcome'), from, { autoAlpha: 1, y: 0, duration: 0.9 }, 1.3)
         .to(q('.welcome'), { autoAlpha: 0, y: -30, duration: 0.65 }, 2.9)
-        // التقويم: يظهر بعد اختفاء الآية تمامًا، يثبت واضحًا، ثم يتلاشى تدريجيًا
+        // التقويم: يظهر بعد اختفاء الترحيب تمامًا، يثبت واضحًا، ثم يتلاشى تدريجيًا
         .fromTo(q('.cal'), from, { autoAlpha: 1, y: 0, duration: 0.8 }, 3.6)
         .to(q('.cal'), { autoAlpha: 0, y: -24, duration: 0.8, ease: 'power1.inOut' }, 5.0)
         .to(q('.couple.main'), { autoAlpha: 0, scale: 1.04, duration: reduce ? 0.35 : 0.6 }, 5.1)
