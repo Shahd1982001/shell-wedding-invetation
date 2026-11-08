@@ -4,6 +4,7 @@ export default function WelcomeScene() {
     <div className="layer welcome">
       <div className="welcome-content">
         <p className="lead">{wedding.welcome}</p>
+        {wedding.phrase && <p className="phrase">{wedding.phrase}</p>}
       </div>
     </div>
   )
